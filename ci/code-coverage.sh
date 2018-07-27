@@ -11,7 +11,7 @@ echo "" > coverage.txt
 
 for d in $(go list ./... | grep -v vendor); do
     pushd $GOPATH/src/$d
-    go test $TAGS -race -coverprofile=profile.out -covermode=atomic -timeout 8m
+    go test $TAGS -v -race -coverprofile=profile.out -covermode=atomic -timeout 8m
     if [ -f profile.out ]; then
         cat profile.out >> coverage.txt
         rm profile.out
