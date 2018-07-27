@@ -97,7 +97,7 @@ func newSession(ctx context.Context, address, username, token string, client *Cl
 		client:    client,
 		sessionID: addr,
 		addr:      addr,
-		maxSubs:   8, // TODO: The value of 8 is just a guess. Change it?
+		maxSubs:   0, // TODO: The value of 8 is just a guess. Change it?
 	}
 
 	go sess.consume()
