@@ -10,7 +10,7 @@ set -e
 echo "" > coverage.txt
 
 for d in $(go list ./... | grep -v vendor); do
-    go test $TAGS -race -coverprofile=profile.out -covermode=atomic -timeout 7m $d
+    go test $TAGS -race -coverprofile=profile.out -covermode=atomic -timeout 9m $d
     if [ -f profile.out ]; then
         cat profile.out >> coverage.txt
         rm profile.out
