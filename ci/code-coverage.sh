@@ -10,7 +10,7 @@ set -e
 echo "" > coverage.txt
 
 #for d in $(go list ./... | grep -v vendor); do
-    go test $TAGS -v -race -count 5 go-hep.org/x/hep/xrootd/...
+    go test $TAGS -v -race go-hep.org/x/hep/xrootd/...
     if [ -f profile.out ]; then
         cat profile.out >> coverage.txt
         rm profile.out
