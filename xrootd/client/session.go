@@ -6,6 +6,7 @@ package client // import "go-hep.org/x/hep/xrootd/client"
 
 import (
 	"context"
+	"log"
 	"net"
 	"sync"
 	"sync/atomic"
@@ -376,12 +377,17 @@ func (sess *session) Send(ctx context.Context, resp xrdproto.Response, req xrdpr
 		}
 	}
 
+	log.Printf("xrootd: sending request: id: %d, body: %#v", req.ReqID(), req)
+
 	data, redirection, err := sess.send(ctx, streamID, responseChannel, data, pathData, pathID)
 	if err != nil || redirection != nil || resp == nil {
 		return redirection, err
 	}
 
-	return nil, resp.UnmarshalXrd(xrdenc.NewRBuffer(data))
+	err = resp.UnmarshalXrd(xrdenc.NewRBuffer(data))
+	log.Printf("xrootd: received response: id: %d, body: %#v, error: %v", req.ReqID(), resp, err)
+
+	return nil, err
 }
 
 func (sess *session) claimPathID(ctx context.Context) (xrdproto.PathID, error) {
