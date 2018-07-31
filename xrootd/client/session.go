@@ -387,7 +387,12 @@ func (sess *session) Send(ctx context.Context, resp xrdproto.Response, req xrdpr
 
 	err = resp.UnmarshalXrd(xrdenc.NewRBuffer(data))
 	respString := fmt.Sprint("%#v", resp)
-	log.Printf("xrootd: received response: id: %d, body: %#v, error: %v", req.ReqID(), respString[:30], err)
+	size := len(respString)
+	if size > 30 {
+		size = 30
+	}
+
+	log.Printf("xrootd: received response: id: %d, body: %#v, error: %v", req.ReqID(), respString[:size], err)
 
 	return nil, err
 }
