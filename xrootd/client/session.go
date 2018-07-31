@@ -6,6 +6,7 @@ package client // import "go-hep.org/x/hep/xrootd/client"
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 	"sync"
@@ -385,7 +386,8 @@ func (sess *session) Send(ctx context.Context, resp xrdproto.Response, req xrdpr
 	}
 
 	err = resp.UnmarshalXrd(xrdenc.NewRBuffer(data))
-	log.Printf("xrootd: received response: id: %d, body: %#v, error: %v", req.ReqID(), resp, err)
+	respString := fmt.Sprint("%#v", resp)
+	log.Printf("xrootd: received response: id: %d, body: %#v, error: %v", req.ReqID(), respString[:30], err)
 
 	return nil, err
 }
